@@ -1,5 +1,5 @@
 require('dotenv').config()
-require('./db')
+require('./db').connect()
 
 /*const routes = require("./routes/comments")*/
 
@@ -25,12 +25,6 @@ const PORT = process.env.PORT || 8200
 
 /* Middleware */
 app.use(express.json())
-
-
- /* Start server */
-mongoose.connection.once('open', () =>{
-    console.log('Mongoose is connected')
-})
 
 
 app.listen(PORT, ()=>{
