@@ -1,0 +1,98 @@
+@font-face {
+    font-family: 'PoppinsLocal';
+    src: url(./fonts/Poppins/Poppins-Regular.ttf) format('woff2');
+}
+
+*{
+    margin: 0px;
+    padding: 0px;
+    box-sizing: border-box;
+    font-family: 'PoppinsLocal', sans-serif;
+}
+
+header{
+    display:flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.nav-links{
+    text-transform: uppercase;
+    font-weight: 700;
+    list-style-type: none;
+}
+
+.nav-links li{
+    display: inline;
+
+}
+
+.nav-links li a{
+    text-decoration: none;
+    color: rgb(236, 79, 163);
+    font-size: 20px;
+    font-weight:700;
+    padding: 1rem;
+}
+
+.recipe-card{
+    display: inline-block;
+    padding: 1rem;
+    border: 1px solid blue;
+    border-radius: 10px;
+    margin-left: 1rem;
+}
+
+.main-section{
+    background-image: url('./images/main_background.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    height: 100vh;
+    width: 100vw;
+}
+
+.main-heading{
+    color: rgb(236, 79, 163);
+    text-align: center;
+    font-weight: 600;
+    font-size: 85px;
+}
+
+.second-main-heading{
+    color: rgb(236, 79, 163);
+    text-align: center;
+    font-weight: 600;
+    font-size: 50px;
+}
+
+.login-form-container .form-container{
+    padding: 1rem;
+    display: flexbox;
+}
+
+.login-form-container{
+    align-items: left;
+    display:inline-block;
+    border: 1px solid blue;
+    margin: 1rem;
+    border-radius: 10px;
+    width: 350px;
+}
+
+.signup-form-container .form-container{
+    padding: 1rem;
+    display: flexbox;
+}
+
+.signup-form-container{
+    align-items: left;
+    display:inline-block;
+    border: 1px solid blue;
+    margin: 1rem;
+    border-radius: 10px;
+    width: 350px;
+}
+
+
+
