@@ -168,100 +168,86 @@ const createComment = comment => {
     return
   }
 
-  /*
-  /* <li></li> 
-  const todoLi = document.createElement('li')
-  todoLi.classList.add('list-group-item')
+  /*<div> comment-list 
+     <div> card mt-4 col-md-6 bg-ligth 
+       <div> card-body 
+        <p> comment-text </p>
+        <a> editComment-Btn </a>
+        <a> deleteComment-Btn </a>
+       </div>
+      </div>
+    </div>*/
 
-  /* <div></div> 
-  const todoMainDiv = document.createElement('div')
-  todoMainDiv.classList.add(
-    'd-flex',
-    'align-items-center',
-    'justify-content-between',
-    'my-1'
-  )
-  todoLi.appendChild(todoMainDiv)
+    /*<div> comment-list </div>*/
+    const commentLi = document.createElement('div')
+    commentLi.classList.add('comment-list')
 
-  /* <div></div> 
-  const leftDiv = document.createElement('div')
-  leftDiv.classList.add('d-flex')
-  todoMainDiv.appendChild(leftDiv)
+    /*<div> card-body </div>*/
+    const commentBody = document.createElement('div')
+    commentBody.classList.add(
+      'card',
+      'mt-4',
+      'col-md-6',
+      'bg-ligth'
+      )
+    
+      /* <div> card-body </div> */
+      const commentCard = document.createElement('div')
+      commentCard.classList.add('card-body')
 
-  /* <div></div> 
-  const rightDiv = document.createElement('div')
-  todoMainDiv.appendChild(rightDiv)
+      /*<p> comment-text </p> */
+      const commentContent =  document.createElement('p')
+      commentContent.innerText = userCommentText
+      commentContent.classList.add('card-text')
+      commentContent.setAttribute('contenteditable', true)
+      if (isCompleted) commentContent.classList.add('strike')
 
-  /* <input type='checkbox'> 
-  const markCompleteCb = document.createElement('input')
-  markCompleteCb.setAttribute('type', 'checkbox')
-  markCompleteCb.setAttribute('id', id)
-  markCompleteCb.classList.add('form-check-input')
-  markCompleteCb.checked = isCompleted
-  const cbId = markCompleteCb.getAttribute('id')
+      /* <a> deleteComment-Btn </a>*/
+      const deleteButtom = document.createElement('a')
+      deleteButtom.classList.add('card-link', deleteButtom) 
 
-  /* <p></p> 
-  const todoText = document.createElement('p')
-  todoText.innerText = userInputText
-  todoText.classList.add('ms-3')
-  todoText.setAttribute('contenteditable', true)
-  leftDiv.appendChild(markCompleteCb)
-  leftDiv.appendChild(todoText)
-  if (isCompleted) todoText.classList.add('strike')
-
-  markCompleteCb.addEventListener('click', evt => {
-    toggleIsCompleted(cbId, todoText, evt)
-  })*/
-
-  /* <span></span>
-  const deleteBtn = document.createElement('span')
-  deleteBtn.innerHTML = deleteIconSVG
-  rightDiv.appendChild(deleteBtn)*/
-
-  deleteCommentBtn.addEventListener('click', () => {
-    deleteComment()
-      .then(() => todoLi.remove())
-      .catch(err => showErrorMsg(err))
-  })
-
-  /* <span></span> 
-  const editBtn = document.createElement('span')
-  editBtn.innerHTML = editIconSVG
-  rightDiv.appendChild(editBtn)*/
-
-  editBtn.addEventListener('click', () => {
-    todoText.setAttribute('contenteditable', true)
-    todoText.focus()
-    hideErrorMsg()
-  })
-
-  todoText.addEventListener('focus', () => {
-    hideErrorMsg()
-  })
-  todoText.addEventListener('blur', () => {
-    if (!todoText.textContent) {
-      deleteTodo(cbId)
-        .then(() => todoLi.remove())
+      deleteButtom.addEventListener('click', () => {
+        deleteComment()
+        .then(() => commentLi())
         .catch(err => showErrorMsg(err))
-      return
-    }
-    todoText.setAttribute('contenteditable', false)
-    editTodoText(cbId, todoText)
-  })
-  /* <ul></ul> */
-  todoList.appendChild(todoLi)
+      })
 
-  // img.setAttribute('src', book.coverPhoto)
+
+      /* <a> editComment-Btn </a>*/
+      const editButtom = document.createElement('a')
+      editButtom.classList.add('card-link', 'editButtom')
+
+      editButtom.addEventListener('click', () => {
+        commentContent.setAttribute('contenteditable', true)
+        commentContent.focus()
+        hideErrorMsg()
+      })
+
+      commentContent.addEventListener('focus', () => {
+        hideErrorMsg()
+      })
+
+    commentContent.addEventListener('blur', () => {
+      if (!commentContent.textContent) {
+          deleteComment()
+          .then(() => commentLi.remove())
+          .catch(err => showErrorMsg(err))
+        return
+      }
+      commentContent.setAttribute('contenteditable', false)
+      updateCommentText(commentContent)
+  })
+
 }
 
 /* Add to do event handling */
-addTodoBtn.addEventListener('click', () => {
-  if (!todoUserText.value) return
-  saveTodo({ toDo: todoUserText.value })
-    .then(todo => {
-      createTodo(todo)
-      todoUserText.value = ''
-      todoArr.push(todo)
+addCommentBtn.addEventListener('click', () => {
+  if (!commentUserText.value) return
+  saveComment({ Comment: commentUserText.value })
+    .then(comment => {
+      createComment(comment)
+      commentUserText.value = ''
+      commentsArr.push(comment)
     })
     .catch(err => showErrorMsg(err))
 })
