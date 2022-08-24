@@ -2,6 +2,9 @@ require('dotenv').config()
 const mongoose = require('mongoose')
 const seedComments = require('./seeder/seedData.json')
 const CommentModel = require('./db/models/comments')
+const UserModel = require('./db/models/user')
+const bcrypt = require('bcryptjs');
+const comment = require('./db/models/comments')
 const { DB_USERNAME, DB_PASSWORD, DB_NAME } = process.env
 
 const uri = `mongodb+srv://${DB_USERNAME}:${DB_PASSWORD}@clipsyncdb.04ucmol.mongodb.net/${DB_NAME}?retryWrites=true&w=majority`
@@ -16,8 +19,11 @@ const seedDB = async () => {
     // seed
     if (process.argv[2] === '--override') {
       await CommentModel.deleteMany({})
+      await UserModel.deleteMany({})
     }
-    await CommentModel.insertMany(seedComments)
+    const testUser = await UserModel.create({name:'test user',email:'test@sample.com', passwordHash: bcrypt.hashSync('123456',10) })
+    const commentsToSeed = seedComments.map(comment => {return {userId:testUser._id,...comment}} )
+    await CommentModel.insertMany(commentsToSeed)
 
     // assert & feedback
     await CommentModel.find().exec()

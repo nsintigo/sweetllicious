@@ -8,8 +8,10 @@ const commentsSchema = new mongoose.Schema({
         min: 20,
         max: 250
     },
-    commentId: {
-        type: mongoose.Schema.Types.ObjectId
+    userId: {
+        type: mongoose.Schema.Types.ObjectId,
+        required: [true,'userId is missing'],
+        ref: 'User'
     }
 });
 

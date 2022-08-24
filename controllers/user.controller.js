@@ -38,12 +38,12 @@ const login = async (req, res) => {
 
 const register = async (req, res) => {
   try {
-    const { email, password } = req.body
+    const { name, email, password } = req.body
     if (!email || !password) {
       res.status(422).send('wrong email or password')
     }
     const passwordHash = await bcrypt.hash(password, 10)
-    const user = await userModel.create({ email, passwordHash })
+    const user = await userModel.create({ name,email, passwordHash })
     res.send(user)
   } catch (e) {
     res.status(500).send(e.message)
