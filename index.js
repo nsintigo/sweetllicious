@@ -7,6 +7,7 @@ const express = require('express')
 const cors = require('cors')
 const cookieParser = require('cookie-parser')
 const morgan = require('morgan')
+const { auth } = require('./auth')
 
 const app = express()
 
@@ -24,9 +25,9 @@ app.use(morgan('dev'));
 app.post('/api/v1/users/login', login)
 app.post('/api/v1/users/register', register)
 
-// app.use(auth)
+app.use(auth)
 app.route('/api/v1/comment/:_id').patch(updateComment).delete(deleteComment)
-app.route('/api/v1/comment').get(getComments).post(createComment)
+app.route('/api/v1/comments').get(getComments).post(createComment)
 
 /* 404 route */
 app.get('*', (req, res) => res.send('404 Not Found'))
