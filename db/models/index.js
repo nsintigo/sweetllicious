@@ -1,5 +1,6 @@
-const comment = require('./comments')
+const Comment = require('./comments')
+const User = require('./user')
 
 module.exports = {
-    comment
+    Comment, User
 }
