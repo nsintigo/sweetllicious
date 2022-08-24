@@ -1,8 +1,11 @@
 require('dotenv').config()
 const mongoose = require('mongoose')
-const seedComments = require('./seedData.json')
-const CommentModel = require('../models/comments')
-const { uri } = require('../')
+const seedComments = require('./seeder/seedData.json')
+const CommentModel = require('./db/models/comments')
+const { DB_USERNAME, DB_PASSWORD, DB_NAME } = process.env
+
+const uri = `mongodb+srv://${DB_USERNAME}:${DB_PASSWORD}@clipsyncdb.04ucmol.mongodb.net/${DB_NAME}?retryWrites=true&w=majority`
+console.log(uri)
 
 const seedDB = async () => {
   try {
@@ -14,7 +17,7 @@ const seedDB = async () => {
     if (process.argv[2] === '--override') {
       await CommentModel.deleteMany({})
     }
-    await ToDoModel.insertMany(seedComments)
+    await CommentModel.insertMany(seedComments)
 
     // assert & feedback
     await CommentModel.find().exec()
