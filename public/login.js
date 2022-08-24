@@ -42,16 +42,16 @@ const loginUser = async (uri, fields) => {
           password: password.value
         }
       )
-      if (loginUserError) {
-        failureAlert.textContent = loginUserError
-        failureAlert.classList.remove('visually-hidden')
-        return
-      } else {
-        failureAlert.classList.add('visually-hidden')
-      }
+      // if (loginUserError) {
+      //   failureAlert.textContent = loginUserError
+      //   failureAlert.classList.remove('visually-hidden')
+      //   return
+      // } else {
+      //   failureAlert.classList.add('visually-hidden')
+      // }
       if (token) {
         console.log('🚀 ~ file: login.js ~ line 54 ~ token', token)
-        failureAlert.classList.add('visually-hidden')
+        // failureAlert.classList.add('visually-hidden')
         localStorage.setItem('jwt', token)
         localStorage.setItem('userEmail', email.value)
         window.location = '/'

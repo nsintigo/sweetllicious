@@ -17,7 +17,7 @@ const registerUser = async (uri, fields) => {
     }
   }
   
-  const baseUri = 'http://localhost:3000/'
+  const baseUri = 'http://localhost:3300/'
   const userSlug = 'api/v1/users/'
   const registerSlug = 'register/'
   
