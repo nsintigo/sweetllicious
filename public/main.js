@@ -167,6 +167,8 @@ const createComment = comment => {
   if (!userCommentText || !id) {
     return
   }
+
+  /*
   /* <li></li> 
   const todoLi = document.createElement('li')
   todoLi.classList.add('list-group-item')
