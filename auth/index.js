@@ -3,17 +3,13 @@ const jwt = require('jsonwebtoken')
 
 const getToken = req => {
   const JWT_KEY = process.env.JWT_KEY_NAME || 'jwt'
-  console.log('headers',req.headers.authorization)
   if (req.headers.authorization) return req.headers.authorization
   if (req.cookies[JWT_KEY]) return req.cookies[JWT_KEY]
   return null
 }
 
 const auth = async (req, res, next) => {
-  console.log(req.url)
   const token = getToken(req)
-
-  console.log(token)
 
   if (!token) {
     if ((req.url = '/')) {

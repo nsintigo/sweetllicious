@@ -3,23 +3,22 @@ let commentsArr = []
 const uri = 'http://localhost:3300/api/v1/comments'
 const JWT_KEY_NAME = 'jwt'
 /* show & hide error message */
-const errorMsg = document.querySelector('.danger')
-const errorMsgText = document.querySelector('.text-error')
-const userEmailPlaceholder = document.querySelector('#user-email')
-const logoutBtn = document.querySelector('#logout')
+// const errorMsg = document.querySelector('.danger')
+// const errorMsgText = document.querySelector('.text-error')
+// const userEmailPlaceholder = document.querySelector('#user-email')
+// const logoutBtn = document.querySelector('#logout')
 
-// const showErrorMsg = err => {
-//   errorMsgText.innerText =
-//     err.message || 'Error while deleting the comment from list'
-//   errorMsg.style.display = 'block'
-//   console.error(err.message)
-// }
-const hideErrorMsg = () => (errorMsg.style.display = 'none')
+const showErrorMsg = err => {
+  // errorMsgText.innerText =
+  //   err.message || 'Error while deleting the comment from list'
+  // errorMsg.style.display = 'block'
+  console.error(err.message)
+}
+// const hideErrorMsg = () => (errorMsg.style.display = 'none')
 
 const getJWT = () => localStorage.getItem(JWT_KEY_NAME)
 
 window.addEventListener('load', async () => {
-  console.log(getJWT())
   const options = {
     method: 'GET',
     headers: {
@@ -29,15 +28,14 @@ window.addEventListener('load', async () => {
   }
   try {
     const response = await fetch(uri, options)
-    console.log(response);
     const data = await response.json()
-    console.log('response data ',data )
 
     if (Array.isArray(data)) {
-      commentsArr = data
+      commentsArr = data.reverse()
       const lastIndex = data.length - 1
-      data.forEach(t => {
-        createComment(t)
+      console.log(commentsArr)
+      commentsArr.forEach(comment => {
+        createComment(comment)
       })
     }
 
@@ -50,6 +48,8 @@ window.addEventListener('load', async () => {
 })
 
 const saveComment = async comment => {
+  console.log(comment)
+
   return new Promise(async (resolve, reject) => {
     const options = {
       method: 'POST',
@@ -62,10 +62,10 @@ const saveComment = async comment => {
     try {
       const response = await fetch(uri, options)
       const data = await response.json()
-      hideErrorMsg()
+      // hideErrorMsg()
       resolve(data) // return data
     } catch (err) {
-      showErrorMsg(err)
+      // showErrorMsg(err)
       reject(err) // throw err
     }
   })
@@ -85,9 +85,9 @@ const updateComment = async comment => {
       const response = await fetch(`${uri}/${comment._id}`, options)
       const data = await response.json()
       resolve(data)
-      hideErrorMsg()
+      // hideErrorMsg()
     } catch (err) {
-      showErrorMsg(err)
+      // showErrorMsg(err)
       reject(err)
     }
   })
@@ -118,22 +118,23 @@ const toggleIsCompleted = (id, commentText, evt) => {
 const deleteComment = async id => {
   return new Promise(async (resolve, reject) => {
     const index = commentsArr.findIndex(comment => comment._id === id)
+    console.log(id, index)
     if (index !== -1) {
       const options = {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json',
-          Authorization: getJWT()
+          Authorization: getJWT(),
         }
       }
       try {
         const response = await fetch(`${uri}/${id}`, options)
         await response.json()
-        hideErrorMsg()
+        // hideErrorMsg()
         resolve()
       } catch (err) {
-        showErrorMsg(err)
-        reject(error)
+        // showErrorMsg(err)
+        reject(err)
       }
     }
   })
@@ -160,86 +161,80 @@ const commentUserText = document.querySelector('#comment-value')
 const addCommentBtn = document.querySelector('#add-comment-btn')
 const editCommentBtn = document.querySelector('#editComment-Btn')
 const deleteCommentBtn = document.querySelector('#deleteComment-Btn')
-commentUserText.addEventListener('focus', () => hideErrorMsg())
+// commentUserText.addEventListener('focus', () => hideErrorMsg())
 
 /* comment list */
 const commentList = document.querySelector('#comment-text')
 
 const createComment = comment => {
-  const { Comment: userCommentText, _id: id } = comment
+  const { comment: userCommentText, _id: id } = comment
 
   if (!userCommentText || !id) {
     return
   }
 
-  /*<div> comment-list 
-     <div> card mt-4 col-md-6 bg-ligth commentBody
-       <div> card-body 
-        <p> comment-text </p>
-        <a> editComment-Btn </a>
-        <a> deleteComment-Btn </a>
-       </div>
-      </div>
-    </div>*/
-
     /*<div> comment-list </div>*/
-    const commentLi = document.createElement('div')
-    commentLi.classList.add('comment-list')
-    commentLi.appendChild(commentBody)
+    const commentLi = document.querySelector('.comments-list')
 
     /*<div> card-body </div>*/
     const commentBody = document.createElement('div')
+    commentLi.appendChild(commentBody)
+    commentBody.setAttribute('id', id);
     commentBody.classList.add(
       'card',
       'mt-4',
       'col-md-6',
       'bg-ligth'
       )
-      commentBody.appendChild(commentCard)
     
       /* <div> card-body </div> */
       const commentCard = document.createElement('div')
+      commentBody.appendChild(commentCard)
       commentCard.classList.add('card-body')
-      commentCard.appendChild(commentContent)
-      commentCard.appendChild(deleteButtom)
-      commentCard.appendChild(editButtom)
 
       /*<p> comment-text </p> */
       const commentContent =  document.createElement('p')
+      commentCard.appendChild(commentContent)
       commentContent.innerText = userCommentText
       commentContent.classList.add('card-text')
       commentContent.setAttribute('contenteditable', true)
-      if (isCompleted) commentContent.classList.add('strike')
 
-      /* <a> deleteComment-Btn </a>*/
-      const deleteButtom = document.createElement('a')
-      deleteButtom.classList.add('card-link', deleteButtom) 
-
-      deleteButtom.addEventListener('click', () => {
-        deleteComment()
-        .then(() => commentLi())
-        .catch(err => showErrorMsg(err))
-      })
-
-
-      /* <a> editComment-Btn </a>*/
-      const editButtom = document.createElement('a')
-      editButtom.classList.add('card-link', 'editButtom')
+     
+      /* <button> editComment-Btn </button>*/
+      const editButtom = document.createElement('button')
+      commentCard.appendChild(editButtom)
+      editButtom.classList.add('btn', 'btn-primary')
+      editButtom.innerText = 'Edit'
 
       editButtom.addEventListener('click', () => {
         commentContent.setAttribute('contenteditable', true)
         commentContent.focus()
-        hideErrorMsg()
+        // hideErrorMsg()
       })
 
+       /* <button> deleteComment-Btn </button>*/
+       const deleteButtom = document.createElement('button')
+       commentCard.appendChild(deleteButtom)
+       deleteButtom.classList.add('btn','btn-primary','mx-2') 
+       deleteButtom.innerText = 'Delete'
+      
+       deleteButtom.addEventListener('click', () => {
+        console.log('delete button click', id)
+         deleteComment(id)
+         .then(() => commentBody.remove())
+         .catch(err => showErrorMsg(err))
+       })
+ 
+ 
+
       commentContent.addEventListener('focus', () => {
-        hideErrorMsg()
+        // hideErrorMsg()
       })
 
     commentContent.addEventListener('blur', () => {
       if (!commentContent.textContent) {
-          deleteComment()
-          .then(() => commentLi.remove())
+          deleteComment(id)
+          .then(() => commentBody.remove())
           .catch(err => showErrorMsg(err))
         return
       }
@@ -250,9 +245,12 @@ const createComment = comment => {
 }
 
 /* Add to do event handling */
-addCommentBtn.addEventListener('click', () => {
+addCommentBtn.addEventListener('click', (e) => {
+  e.preventDefault();
+  console.log(commentUserText.value);
+  const userEmail = localStorage.getItem('userEmail');
   if (!commentUserText.value) return
-  saveComment({ Comment: commentUserText.value })
+  saveComment({ comment: commentUserText.value, userEmail })
     .then(comment => {
       createComment(comment)
       commentUserText.value = ''

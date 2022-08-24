@@ -15,8 +15,8 @@ const createComment = async (req, res) => {
   try {
     // throw new Error('some error')
     const { comment } = req.body
-    const commentId = req.loggedInUser._id
-    const newComment = await CommentModel.create({ comment, commentId })
+    const userId = req.loggedInUser._id
+    const newComment = await CommentModel.create({ comment, userId })
     res.send(newComment)
     return
   } catch (err) {
@@ -49,13 +49,14 @@ const updateComment = async (req, res) => {
 const deleteComment = async (req, res) => {
   try {
     const { _id } = req.params
+    console.log(_id)
     if (!_id) res.status(404).send('Not Found')
 
     const commentInfo = await CommentModel.findById(_id).exec()
-    if (req.loggedInUser._id.toString() !== commentInfo?.commentId?.toString()) {
+    if (req.loggedInUser._id.toString() !== commentInfo?.userId?.toString()) {
       res
         .status(401)
-        .send({ errorMsg: 'you do not have access to delete this book' })
+        .send({ errorMsg: 'you do not have access to delete this comment' })
       return
     }
 
