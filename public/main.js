@@ -169,7 +169,7 @@ const createComment = comment => {
   }
 
   /*<div> comment-list 
-     <div> card mt-4 col-md-6 bg-ligth 
+     <div> card mt-4 col-md-6 bg-ligth commentBody
        <div> card-body 
         <p> comment-text </p>
         <a> editComment-Btn </a>
@@ -181,6 +181,7 @@ const createComment = comment => {
     /*<div> comment-list </div>*/
     const commentLi = document.createElement('div')
     commentLi.classList.add('comment-list')
+    commentLi.appendChild(commentBody)
 
     /*<div> card-body </div>*/
     const commentBody = document.createElement('div')
@@ -190,10 +191,14 @@ const createComment = comment => {
       'col-md-6',
       'bg-ligth'
       )
+      commentBody.appendChild(commentCard)
     
       /* <div> card-body </div> */
       const commentCard = document.createElement('div')
       commentCard.classList.add('card-body')
+      commentCard.appendChild(commentContent)
+      commentCard.appendChild(deleteButtom)
+      commentCard.appendChild(editButtom)
 
       /*<p> comment-text </p> */
       const commentContent =  document.createElement('p')
