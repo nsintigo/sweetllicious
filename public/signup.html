@@ -14,7 +14,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;300;400;600;700;800;900&display=swap" rel="stylesheet">
 
-    <script src="./main.js" defer></script>
+    <script src="./signup.js" defer></script>
     <title>Sign Up</title>
 </head>
 <body>
@@ -34,18 +34,18 @@
     <hr>
     <main>
         <div class="signup-form-container">
-            <form class="form-container">
+            <form class="form-container" id="register-form">
             <div class="mb-3">
                 <label for="signup-name" class="form-label">Name</label>
                 <input type="text" class="form-control" id="signup-name">
             </div>
             <div class="mb-3">
                 <label for="signup-email" class="form-label">Email address</label>
-                <input type="email" class="form-control" id="signup-email">
+                <input type="email" class="form-control" id="signup-email" name="email">
             </div>
             <div class="mb-3">
                 <label for="signup-password" class="form-label">Password</label>
-                <input type="password" class="form-control" id="signup-password">
+                <input type="password" class="form-control" id="signup-password" name="password">
             </div>
          
                 <button type="submit" class="btn btn-primary">Submit</button>
