@@ -37,22 +37,23 @@ const registerUser = async (uri, fields) => {
           password: password.value
         })
   
-      if (registerUserError) {
-        failureAlert.classList.remove('visually-hidden')
-        successAlert.classList.add('visually-hidden')
-        failureAlert.textContent = registerUserError
-        return
-      } else {
-        failureAlert.classList.add('visually-hidden')
-      }
+      // if (registerUserError) {
+      //   failureAlert.classList.remove('visually-hidden')
+      //   successAlert.classList.add('visually-hidden')
+      //   failureAlert.textContent = registerUserError
+      //   return
+      // } else {
+      //   failureAlert.classList.add('visually-hidden')
+      // }
   
       if (registeredUser) {
-        failureAlert.classList.add('visually-hidden')
-        successAlert.classList.remove('visually-hidden')
+        // failureAlert.classList.add('visually-hidden')
+        // successAlert.classList.remove('visually-hidden')
+        window.location='/login.html'
       } else {
-        failureAlert.innerHTML = registeredUser.message
-        failureAlert.classList.remove('visually-hidden')
-        successAlert.classList.add('visually-hidden')
+        // failureAlert.innerHTML = registeredUser.message
+        // failureAlert.classList.remove('visually-hidden')
+        // successAlert.classList.add('visually-hidden')
       }
     } catch (error) {
       console.error('Error in user log in', error)

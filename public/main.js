@@ -1,6 +1,6 @@
 
 let commentsArr = []
-const uri = 'http://localhost:3000/api/v1/comments'
+const uri = 'http://localhost:3300/api/v1/comments'
 const JWT_KEY_NAME = 'jwt'
 /* show & hide error message */
 const errorMsg = document.querySelector('.danger')
@@ -8,17 +8,18 @@ const errorMsgText = document.querySelector('.text-error')
 const userEmailPlaceholder = document.querySelector('#user-email')
 const logoutBtn = document.querySelector('#logout')
 
-const showErrorMsg = err => {
-  errorMsgText.innerText =
-    err.message || 'Error while deleting the comment from list'
-  errorMsg.style.display = 'block'
-  console.error(err.message)
-}
+// const showErrorMsg = err => {
+//   errorMsgText.innerText =
+//     err.message || 'Error while deleting the comment from list'
+//   errorMsg.style.display = 'block'
+//   console.error(err.message)
+// }
 const hideErrorMsg = () => (errorMsg.style.display = 'none')
 
 const getJWT = () => localStorage.getItem(JWT_KEY_NAME)
 
 window.addEventListener('load', async () => {
+  console.log(getJWT())
   const options = {
     method: 'GET',
     headers: {
@@ -28,7 +29,9 @@ window.addEventListener('load', async () => {
   }
   try {
     const response = await fetch(uri, options)
+    console.log(response);
     const data = await response.json()
+    console.log('response data ',data )
 
     if (Array.isArray(data)) {
       commentsArr = data
@@ -38,10 +41,11 @@ window.addEventListener('load', async () => {
       })
     }
 
-    const userEmail = localStorage.getItem('userEmail')
-    userEmailPlaceholder.textContent = userEmail //.split('@')[0]
+    // const userEmail = localStorage.getItem('userEmail')
+    // userEmailPlaceholder.textContent = userEmail //.split('@')[0]
   } catch (err) {
-    showErrorMsg(err)
+    // showErrorMsg(err)
+    console.error(err)
   }
 })
 
@@ -261,11 +265,11 @@ const clearCookies = name => {
   document.cookie = name + '=; Max-Age=-99999999;'
 }
 
-logoutBtn.addEventListener('click', e => {
-  e.preventDefault()
-  localStorage.clear()
-  clearCookies(JWT_KEY_NAME)
-  window.location.href = '/login'
-})
+// logoutBtn.addEventListener('click', e => {
+//   e.preventDefault()
+//   localStorage.clear()
+//   clearCookies(JWT_KEY_NAME)
+//   window.location.href = '/login'
+// })
 
 
