@@ -21,7 +21,7 @@ mongoose.connect(uri, {
 }).catch(error=> console.log(error))
 
 
-const PORT = process.env.PORT || 8200
+const PORT = process.env.PORT || 3300
 
 /* Middleware */
 app.use(express.json())

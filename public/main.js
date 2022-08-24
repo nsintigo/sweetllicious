@@ -45,7 +45,7 @@ window.addEventListener('load', async () => {
   }
 })
 
-const saveComment = async todo => {
+const saveComment = async comment => {
   return new Promise(async (resolve, reject) => {
     const options = {
       method: 'POST',

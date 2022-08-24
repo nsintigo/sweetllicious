@@ -16,7 +16,7 @@ const createComment = async (req, res) => {
     // throw new Error('some error')
     const { comment } = req.body
     const commentId = req.loggedInUser._id
-    const newComment = await commentModel.create({ comment, commentId })
+    const newComment = await CommentModel.create({ comment, commentId })
     res.send(newComment)
     return
   } catch (err) {
