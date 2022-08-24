@@ -93,7 +93,7 @@ const toggleIsCompleted = (id, commentText, evt) => {
   const index = commentsArr.findIndex(comment => comment._id === id)
   if (index !== -1) {
     commentsArr[index].isCompleted = !commentsArr[index].isCompleted
-    editToDo(commentsArr[index])
+    updateComment(commentsArr[index])
       .then(() => {
         // no action
       })
@@ -145,7 +145,7 @@ const updateCommentText = (id, comment) => {
       })
       .catch(err => {
         commentsArr[index].comment = prevCommentText
-        comment.textContent = preCommentText
+        comment.textContent = prevCommentText
         showErrorMsg(err)
       })
   }
@@ -162,7 +162,7 @@ commentUserText.addEventListener('focus', () => hideErrorMsg())
 const commentList = document.querySelector('#comment-text')
 
 const createComment = comment => {
-  const { UserComment: userCommentText, _id: id } = comment
+  const { Comment: userCommentText, _id: id } = comment
 
   if (!userCommentText || !id) {
     return
