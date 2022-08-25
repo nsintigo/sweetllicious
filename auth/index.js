@@ -14,45 +14,55 @@ const getToken = req => {
 }
 
 const auth = async (req, res, next) => {
-  const token = getToken(req)
-  console.log('token',typeof token)
 
-  if (token == null || token === 'null') {
-    console.log('token')
-    // if (req.url = '/') {
-    //   return res.json('please login')
-    // }
-    return res.status(401).send({ success: false, message: 'unauthorized' })
-  }
+  try {
+
+    const token = getToken(req)
+    console.log('token',typeof token)
   
-  const payload = jwt.verify(token, process.env.JWT_SECRET)
-
-  if (!payload) {
-    if ((req.url = '/')) {
-        return res.json('please login')
+    if (token == null || token === 'null') {
+      console.log('token')
+      // if (req.url = '/') {
+      //   return res.json('please login')
+      // }
+      return res.status(401).send({ success: false, message: 'unauthorized' })
     }
-    return res.status(401).send({ success: false, message: 'unauthorized' })
-  }
-
-  const user = await userModel.findOne({ email: payload?.email }).exec()
-
-  if (!user) {
-    if ((req.url = '/')) {
-        return res.json('please login')
+    
+    const payload = jwt.verify(token, process.env.JWT_SECRET)
+  
+    if (!payload) {
+      if ((req.url = '/')) {
+          return res.json('please login')
+      }
+      return res.status(401).send({ success: false, message: 'unauthorized' })
     }
-    return res.status(401).send({ success: false, message: 'unauthorized' })
+  
+    const user = await userModel.findOne({ email: payload?.email }).exec()
+  
+    if (!user) {
+      if ((req.url = '/')) {
+          return res.json('please login')
+      }
+      return res.status(401).send({ success: false, message: 'unauthorized' })
+    }
+  
+    if (!req.loggedInUser) {
+      Object.defineProperty(req, 'loggedInUser', {
+        value: user,
+        writable: false
+      })
+    } else {
+      throw new Error('loggedInUser property already exists')
+    }
+  
+    next()
   }
 
-  if (!req.loggedInUser) {
-    Object.defineProperty(req, 'loggedInUser', {
-      value: user,
-      writable: false
-    })
-  } else {
-    throw new Error('loggedInUser property already exists')
+ catch(err){
+     console.error(err);
+     res.status(401).send({ success: false, message: 'unauthorized' })
   }
 
-  next()
 }
 
 // unused in this app - carried over from the bookstore app
