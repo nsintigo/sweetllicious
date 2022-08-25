@@ -32,6 +32,7 @@ const registerUser = async (uri, fields) => {
   const userSlug = 'api/v1/users/'
   const registerSlug = 'register/'
   
+  const username = document.querySelector('[name = "username"]')
   const email = document.querySelector('[name = "email"]')
   const password = document.querySelector('[name = "password"]')
   const registerForm = document.querySelector('#register-form')
@@ -44,6 +45,7 @@ const registerUser = async (uri, fields) => {
   
       const { error: registerUserError, value: registeredUser } =
         await registerUser(baseUri.concat(userSlug, registerSlug), {
+          name: username.value,
           email: email.value,
           password: password.value
         })
