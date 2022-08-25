@@ -2,8 +2,7 @@ const { Comment: CommentModel } = require('../db/models')
 
 const getComments = async (req, res) => {
   try {
-    const commentId = req.loggedInUser._id.toString()
-    const commentsList = await CommentModel.find({ commentId }).exec()
+    const commentsList = await CommentModel.find({  }).exec()
     res.send(commentsList)
     return
   } catch (err) {

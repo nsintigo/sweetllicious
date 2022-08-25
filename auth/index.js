@@ -17,7 +17,7 @@ const auth = async (req, res, next) => {
     }
     return res.status(401).send({ success: false, message: 'unauthorized' })
   }
-
+  console.log(token)
   const payload = jwt.verify(token, process.env.JWT_SECRET)
 
   if (!payload) {

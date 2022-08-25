@@ -25,9 +25,10 @@ app.use(morgan('dev'));
 app.post('/api/v1/users/login', login)
 app.post('/api/v1/users/register', register)
 
+app.route('/api/v1/comments').get(getComments)
 app.use(auth)
 app.route('/api/v1/comments/:_id').patch(updateComment).delete(deleteComment)
-app.route('/api/v1/comments').get(getComments).post(createComment)
+app.route('/api/v1/comments').post(createComment)
 
 /* 404 route */
 app.get('*', (req, res) => res.send('404 Not Found'))
