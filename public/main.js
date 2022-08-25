@@ -28,9 +28,9 @@ window.addEventListener('load', async () => {
     }
   }
   try {
-    console.log(getJWT())
+    // if token is present, then show user logout button
+
     if (getJWT()){
-      console.log('some')
       logoutBtn.hidden = false
     }
 
