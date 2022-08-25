@@ -5,6 +5,8 @@ const JWT_KEY_NAME = 'jwt'
 // const errorMsg = document.querySelector('.danger')
 // const errorMsgText = document.querySelector('.text-error')
 // const userEmailPlaceholder = document.querySelector('#user-email')
+const signupBtn = document.querySelector('#signup-btn')
+const loginBtn = document.querySelector('#login-btn')
 const logoutBtn = document.querySelector('#logout-btn')
 
 const showErrorMsg = err => {
@@ -31,6 +33,20 @@ window.addEventListener('load', async () => {
       console.log('some')
       logoutBtn.hidden = false
     }
+
+    const userEmail=localStorage.getItem('userEmail')
+    if(userEmail){
+      signupBtn.setAttribute('href',"#")
+
+      loginBtn.textContent= userEmail.split('@')[0]
+      loginBtn.style.cssText=
+          `display:inline;
+          text-decoration:none ;
+          color:blue;
+          pointer-events:none`
+    }
+    
+    
     const response = await fetch(uri, options)
     const data = await response.json()
 
