@@ -1,4 +1,3 @@
-
 let commentsArr = []
 const uri = 'http://localhost:3300/api/v1/comments'
 const JWT_KEY_NAME = 'jwt'
@@ -27,6 +26,11 @@ window.addEventListener('load', async () => {
     }
   }
   try {
+    const logoutBtn = document.querySelector('#logout-btn')
+    console.log(getJWT())
+    if (getJWT()){
+      logoutBtn.setAttribute('hidden', false)
+    }
     const response = await fetch(uri, options)
     const data = await response.json()
 
