@@ -5,7 +5,7 @@ const JWT_KEY_NAME = 'jwt'
 // const errorMsg = document.querySelector('.danger')
 // const errorMsgText = document.querySelector('.text-error')
 // const userEmailPlaceholder = document.querySelector('#user-email')
-// const logoutBtn = document.querySelector('#logout')
+const logoutBtn = document.querySelector('#logout-btn')
 
 const showErrorMsg = err => {
   // errorMsgText.innerText =
@@ -26,10 +26,10 @@ window.addEventListener('load', async () => {
     }
   }
   try {
-    const logoutBtn = document.querySelector('#logout-btn')
     console.log(getJWT())
     if (getJWT()){
-      logoutBtn.setAttribute('hidden', false)
+      console.log('some')
+      logoutBtn.hidden = false
     }
     const response = await fetch(uri, options)
     const data = await response.json()
@@ -267,11 +267,11 @@ const clearCookies = name => {
   document.cookie = name + '=; Max-Age=-99999999;'
 }
 
-// logoutBtn.addEventListener('click', e => {
-//   e.preventDefault()
-//   localStorage.clear()
-//   clearCookies(JWT_KEY_NAME)
-//   window.location.href = '/login'
-// })
+logoutBtn.addEventListener('click', e => {
+  e.preventDefault()
+  localStorage.clear()
+  clearCookies(JWT_KEY_NAME)
+  window.location.href = '/login.html'
+})
 
 

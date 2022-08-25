@@ -1,4 +1,15 @@
 // @ts-nocheck
+const JWT_KEY_NAME = 'jwt'
+const getJWT = () => localStorage.getItem(JWT_KEY_NAME)
+
+
+window.addEventListener('load', ()=>{
+ const token = getJWT();
+ if (token) {
+  window.location.href='/'
+ }
+})
+
 const registerUser = async (uri, fields) => {
     try {
       const createOptions = {
