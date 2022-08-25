@@ -66,7 +66,7 @@ const loginUser = async (uri, fields) => {
         // failureAlert.classList.add('visually-hidden')
         localStorage.setItem('jwt', token)
         localStorage.setItem('userEmail', email.value)
-        window.location = '/'
+        window.location.href = '/recipes.html'
       }
     } catch (error) {
       console.error('Error in user log in', error)
