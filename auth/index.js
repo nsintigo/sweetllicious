@@ -3,21 +3,28 @@ const jwt = require('jsonwebtoken')
 
 const getToken = req => {
   const JWT_KEY = process.env.JWT_KEY_NAME || 'jwt'
-  if (req.headers.authorization) return req.headers.authorization
-  if (req.cookies[JWT_KEY]) return req.cookies[JWT_KEY]
+  if (req.headers.authorization)  {
+    console.log('authorization')
+    return req.headers.authorization
+  }
+  if (req.cookies[JWT_KEY]) { 
+    console.log('cookie')
+    return req.cookies[JWT_KEY]}
   return null
 }
 
 const auth = async (req, res, next) => {
   const token = getToken(req)
+  console.log('token',typeof token)
 
-  if (!token) {
-    if ((req.url = '/')) {
-      return res.json('please login')
-    }
+  if (token == null || token === 'null') {
+    console.log('token')
+    // if (req.url = '/') {
+    //   return res.json('please login')
+    // }
     return res.status(401).send({ success: false, message: 'unauthorized' })
   }
-  console.log(token)
+  
   const payload = jwt.verify(token, process.env.JWT_SECRET)
 
   if (!payload) {
