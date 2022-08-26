@@ -97,7 +97,6 @@ const updateComment = async comment => {
       method: 'PATCH',
       headers: {
         'Content-Type': 'application/json',
-        Authorization: getJWT()
       },
       body: JSON.stringify(comment)
     }
@@ -112,28 +111,6 @@ const updateComment = async comment => {
     }
   })
 }
-
-const toggleIsCompleted = (id, commentText, evt) => {
-  const index = commentsArr.findIndex(comment => comment._id === id)
-  if (index !== -1) {
-    commentsArr[index].isCompleted = !commentsArr[index].isCompleted
-    updateComment(commentsArr[index])
-      .then(() => {
-        // no action
-      })
-      .catch(err => {
-        commentsArr[index].isCompleted = !commentsArr[index].isCompleted
-        evt.target.checked = commentsArr[index].isCompleted
-        showErrorMsg(err)
-      })
-      .finally(() => {
-        commentsArr[index].isCompleted
-          ? commentText.classList.add('strike')
-          : commentText.classList.remove('strike')
-      })
-  }
-}
-
 
 const deleteComment = async id => {
   return new Promise(async (resolve, reject) => {
@@ -179,8 +156,6 @@ const updateCommentText = (id, comment) => {
 /* add to do component */
 const commentUserText = document.querySelector('#comment-value')
 const addCommentBtn = document.querySelector('#add-comment-btn')
-const editCommentBtn = document.querySelector('#editComment-Btn')
-const deleteCommentBtn = document.querySelector('#deleteComment-Btn')
 // commentUserText.addEventListener('focus', () => hideErrorMsg())
 
 /* comment list */
@@ -259,7 +234,7 @@ const createComment = comment => {
         return
       }
       commentContent.setAttribute('contenteditable', false)
-      updateCommentText(commentContent)
+      updateComment({_id:id,comment:commentContent.innerText})
   })
 
 }

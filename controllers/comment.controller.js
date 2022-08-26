@@ -30,7 +30,7 @@ const updateComment = async (req, res) => {
     if (!_id) res.status(404).send('Not Found')
 
     const commentInfo = await CommentModel.findById(_id).exec()
-    if (req.loggedInUser._id.toString() !== commentInfo?.commentId?.toString()) {
+    if (req.loggedInUser._id.toString() !== commentInfo?.userId?.toString()) {
       res
         .status(401)
         .send({ errorMsg: 'you do not have access to edit this comment' })
