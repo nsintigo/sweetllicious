@@ -62,7 +62,8 @@ const registerUser = async (uri, fields) => {
       if (registeredUser) {
         // failureAlert.classList.add('visually-hidden')
         // successAlert.classList.remove('visually-hidden')
-        window.location='/login.html'
+        alert('Sign up successful!')
+        setTimeout(()=>window.location='/login.html', 1500)
       } else {
         // failureAlert.innerHTML = registeredUser.message
         // failureAlert.classList.remove('visually-hidden')

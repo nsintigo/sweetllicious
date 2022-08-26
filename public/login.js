@@ -62,11 +62,11 @@ const loginUser = async (uri, fields) => {
       //   failureAlert.classList.add('visually-hidden')
       // }
       if (token) {
-        console.log('🚀 ~ file: login.js ~ line 54 ~ token', token)
         // failureAlert.classList.add('visually-hidden')
+        alert('You have successfully login')
         localStorage.setItem('jwt', token)
         localStorage.setItem('userEmail', email.value)
-        window.location.href = '/recipes.html'
+        setTimeout(()=>window.location.href = '/recipes.html',1500)
       }
     } catch (error) {
       console.error('Error in user log in', error)
